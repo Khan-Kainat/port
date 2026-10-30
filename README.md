@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kainat — Personal Portfolio Website
 
-## Getting Started
+A clean, modern, responsive single-page portfolio for **Kainat**, first-year AI & Data Science student at Nexcore Institute of Technology, Mumbai.
 
-First, run the development server:
+Built with **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS 4**.
+
+---
+
+## 🚀 How to Run
+
+### Development (live-reload, instant changes)
 
 ```bash
+cd port
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd port
+npm run build
+npm run start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+port/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          ← Root layout (fonts, metadata, head)
+│   │   ├── page.tsx            ← Main single-page portfolio
+│   │   ├── globals.css         ← Base Tailwind + custom CSS
+│   │   └── projects/[slug]/    ← Individual project detail pages
+│   ├── components/
+│   │   ├── navigation/         ← Sticky navbar + mobile menu
+│   │   ├── hero/               ← Hero section + visual card
+│   │   ├── about/              ← About me + info blocks
+│   │   ├── skills/             ← Skills by category
+│   │   ├── projects/           ← Project cards + modal + graphics
+│   │   ├── journey/            ← Learning timeline
+│   │   ├── approach/           ← 3 working principles
+│   │   ├── contact/            ← Contact form + social links
+│   │   ├── footer/             ← Footer
+│   │   └── common/             ← Monogram logo, brand icons
+│   └── data/
+│       └── portfolioData.ts    ← ⭐ All your content lives here
+└── public/
+    └── favicon.svg             ← SVG favicon (K monogram)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ✏️ How to Customize
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Update Personal Details
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open **`src/data/portfolioData.ts`** — everything you need to change is in one file:
+
+- **`personalInfo.contacts.email`** → replace `kainat.student@example.com` with your real email
+- **`personalInfo.contacts.github`** → replace with your GitHub profile URL
+- **`personalInfo.contacts.linkedin`** → replace with your LinkedIn profile URL
+
+### Add or Edit Projects
+
+In `portfolioData.ts`, edit the `projects` array. Each project has:
+- `title`, `shortDescription`, `fullDescription`
+- `tags` — technology / tool labels
+- `badge` — e.g. `"Front-End Concept"` or `"Coursework Project"`
+- `conceptNotes.problem`, `conceptNotes.approach`, `conceptNotes.learnings[]`
+- `demoUrl` and `githubUrl` — set to real links when available
+
+### Add a Real Photo
+
+Replace the `HeroVisual` component in `src/components/hero/HeroVisual.tsx` with an `<Image>` tag pointing to your photo in `public/`. The component uses Next.js's `<Image>` for optimized delivery.
+
+### Update Project Preview Graphics
+
+Each project card visual is defined in `src/components/projects/ProjectPreviewGraphic.tsx`. You can swap the CSS-drawn mockups for real screenshots by adding images to `public/projects/` and using `<Image>` tags.
+
+---
+
+## 🎨 Color Palette
+
+| Token | Hex | Usage |
+|---|---|---|
+| Pure White | `#FFFFFF` | Main background |
+| Soft White | `#F7F9FC` | Alternate sections, card backgrounds |
+| Primary Blue | `#2563EB` | Buttons, links, active states |
+| Light Blue | `#DBEAFE` | Soft accents, icon backgrounds |
+| Charcoal | `#242B36` | Headings, important text |
+| Slate Gray | `#64748B` | Secondary text, descriptions |
+| Light Border | `#E2E8F0` | Card outlines, dividers |
+
+---
+
+## 📡 Connect the Contact Form to Real Email
+
+Right now the form validates inputs client-side and shows a success state. To wire it up to actually send email, choose one of these free student-friendly services:
+
+- **[Formspree](https://formspree.io/)** — free tier, just add your email and use their `<form action="...">` endpoint
+- **[EmailJS](https://www.emailjs.com/)** — free tier, works with any email provider, no backend needed
+- **[Resend](https://resend.com/)** — free tier with developer API
+
+Update `src/components/contact/ContactSection.tsx` → `handleSubmit` to POST to your chosen endpoint.
+
+---
+
+## 🌐 Publishing (Free Options)
+
+### Vercel (Recommended — 1 command)
+
+```bash
+npx vercel
+```
+
+Follow the prompts. Your site will be live at `https://your-project.vercel.app` in minutes.
+
+### Netlify
+
+Push to GitHub, then connect your repo at [app.netlify.com](https://app.netlify.com). Set build command to `npm run build` and publish directory to `.next`.
+
+---
+
+## 🔤 Fonts
+
+- **Headings:** [Sora](https://fonts.google.com/specimen/Sora) — loaded from Google Fonts
+- **Body:** [Inter](https://fonts.google.com/specimen/Inter) — loaded from Google Fonts
+
+Fonts load via a `<link>` in `src/app/layout.tsx`. No build step required.
+
+---
+
+*Designed and built while learning. — Kainat, 2026*
